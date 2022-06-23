@@ -19,6 +19,9 @@ public class EndMenu : MonoBehaviour
             return;
         }
 
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         Destroy(FindObjectOfType<Music>().gameObject);
         SceneManager.LoadScene(0);
 

@@ -7,5 +7,7 @@ public class Music : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MusicVolume");
     }
 }

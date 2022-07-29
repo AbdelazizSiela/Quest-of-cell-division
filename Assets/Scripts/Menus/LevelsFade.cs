@@ -9,6 +9,10 @@ public class LevelsFade : MonoBehaviour
 
    public void LoadNextLevel()
     {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         fadeScreen.SetActive(true);
         Invoke("LoadNextScene",0.5f);
     }

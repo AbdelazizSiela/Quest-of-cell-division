@@ -7,6 +7,8 @@ public class Popup : MonoBehaviour
 {
     [SerializeField] private GameObject popupGO, interactionHint;
     [SerializeField] private TextMeshProUGUI popupText,interactionText;
+    [SerializeField] private GameObject[] keyBinds;
+    [SerializeField] private GameObject keybindE, keybindI, keybindEsc;
 
     [SerializeField] private string[] Indications;
 
@@ -21,6 +23,7 @@ public class Popup : MonoBehaviour
 
         yield return new WaitForSeconds(0f);
 
+        keyBinds[0].SetActive(true);
         tutorialEvents.waitOnMove = true;
         EnablePopup();
 
@@ -89,6 +92,8 @@ public class Popup : MonoBehaviour
 
             tutorialEvents.isEscaping = false;
             tutorialEvents.waitOnEscape = false;
+
+            keybindEsc.SetActive(false);
             return;
         }
     }
@@ -126,6 +131,9 @@ public class Popup : MonoBehaviour
                     currentIndication++;
                     tutorialEvents.waitOnSprint = true;
 
+                    keyBinds[0].SetActive(false);
+                    keyBinds[1].SetActive(true);
+
                     ChangeText();
                 }
                 break;
@@ -135,15 +143,21 @@ public class Popup : MonoBehaviour
                     currentIndication++;
                     tutorialEvents.waitOnJump = true;
 
+                    keyBinds[1].SetActive(false);
+                    keyBinds[2].SetActive(true);
+
                     ChangeText();
                 }
                 break;
             case 2:
                 if (tutorialEvents.isJumping)
                 {
+                    keyBinds[2].SetActive(false);
+                    keybindE.SetActive(true);
+
                     currentIndication++;
 
-                    ChangeInteractionText("Press E to skip");
+                    ChangeInteractionText("Press    to skip");
                     OnInteractionText(true);
                     ChangeText();
                 }
@@ -151,13 +165,16 @@ public class Popup : MonoBehaviour
             case 4:
                 if (FindObjectOfType<CollectNotes>().waitForTutorial)
                 {
+                    keybindE.SetActive(false);
                     FindObjectOfType<CollectNotes>().waitForTutorial = false;
                 }
 
                 if (tutorialEvents.isReadingNotepad)
                 {
+                    keybindEsc.SetActive(true);
+
                     currentIndication++;
-                    ChangeInteractionText("Press Esc to close");
+                    ChangeInteractionText("Press    to close");
                     OnEscapeText(true);
                     ChangeText();
                 }
@@ -165,6 +182,8 @@ public class Popup : MonoBehaviour
             case 5:
                 if (tutorialEvents.isEscaping)
                 {
+                    keybindEsc.SetActive(false);
+
                     currentIndication++;
                     tutorialEvents.waitOnEscape = false;
 
@@ -174,8 +193,10 @@ public class Popup : MonoBehaviour
             case 6:
                 if (tutorialEvents.isReadingNotepad)
                 {
+                    keybindEsc.SetActive(true);
+
                     currentIndication++;
-                    ChangeInteractionText("Press Esc to close");
+                    ChangeInteractionText("Press    to close");
                     OnEscapeText(true);
                     ChangeText();
                 }
@@ -183,28 +204,39 @@ public class Popup : MonoBehaviour
             case 8:
                 if(!waitingOnInventory)
                 {
+                    keybindI.SetActive(true);
+
                     FindObjectOfType<NotesMenu>().waitForTutorial = false;
 
-                    ChangeInteractionText("Press I to open inventory");
+                    ChangeInteractionText("Press     to open inventory");
                     OnInventoryText(true);
                 }
                 break;
             case 9:
 
+                keybindI.SetActive(false);
+                keybindEsc.SetActive(true);
+                keyBinds[3].SetActive(true);
+
                 currentIndication++;
-                ChangeInteractionText("Press Esc or I to close");
+                ChangeInteractionText("Press    to close");
                 OnEscapeText(true);
 
                 break;
             case 11:
                 if(!tutorialEvents.isInventory)
                 {
-                    ChangeInteractionText("Press E to skip");
+                    keyBinds[3].SetActive(false);
+                    keybindEsc.SetActive(false);
+                    keybindE.SetActive(true);
+
+                    ChangeInteractionText("Press    to skip");
                     OnInteractionText(true);
                     ChangeText();
                 }
                 break;
             case 12:
+                keybindE.SetActive(false);
 
                 currentIndication++;
 
@@ -216,8 +248,9 @@ public class Popup : MonoBehaviour
                 if(tutorialEvents.isAnswer)
                 {
                     EnablePopup();
+                    keybindE.SetActive(true);
 
-                    ChangeInteractionText("Press E to skip");
+                    ChangeInteractionText("Press    to skip");
                     OnInteractionText(true);
                     ChangeText();
                 }
@@ -226,7 +259,7 @@ public class Popup : MonoBehaviour
 
                 currentIndication++;
 
-                ChangeInteractionText("Press E to skip");
+                ChangeInteractionText("Press    to skip");
                 OnInteractionText(true);
                 ChangeText();
                 
@@ -235,7 +268,7 @@ public class Popup : MonoBehaviour
 
                 currentIndication++;
 
-                ChangeInteractionText("Press E to skip");
+                ChangeInteractionText("Press    to skip");
                 OnInteractionText(true);
                 ChangeText();
 
@@ -244,7 +277,7 @@ public class Popup : MonoBehaviour
 
                 currentIndication++;
 
-                ChangeInteractionText("Press E to skip");
+                ChangeInteractionText("Press    to skip");
                 OnInteractionText(true);
                 ChangeText();
 

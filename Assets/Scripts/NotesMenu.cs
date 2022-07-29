@@ -67,11 +67,11 @@ public class NotesMenu : MonoBehaviour
             return;
         }
 
-        notesMenu.SetActive(!notesMenu.activeSelf);
-
-        if(notesMenu.activeSelf)
+        if(!notesMenu.activeSelf)
         {
-            if(FindObjectOfType<TutorialEvents>())
+            notesMenu.SetActive(true);
+
+            if (FindObjectOfType<TutorialEvents>())
             {
                 FindObjectOfType<TutorialEvents>().isInventory = true;
             }
@@ -80,18 +80,6 @@ public class NotesMenu : MonoBehaviour
             movementScript.enabled = false;
             Anim.enabled = false;
             UpdateDisplay();
-        }
-        else
-        {
-            if (FindObjectOfType<TutorialEvents>())
-            {
-                FindObjectOfType<TutorialEvents>().isInventory = false;
-            }
-
-            Anim.enabled = true;
-
-            statsScript.isInventory = false;
-            movementScript.enabled = true;
         }
     }
     private void OnEscape()

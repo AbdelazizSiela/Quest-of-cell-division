@@ -17,6 +17,7 @@ public class NPCQuestionareInteraction : MonoBehaviour
     [SerializeField] private GameObject interactionText;
     [SerializeField] private GameObject endingScene;
     [SerializeField] private AudioClip door_open_sound;
+    [SerializeField] private GameObject resultsMenu;
 
     private bool startedConversation,isAnsweredCorrect,isAnsweredFalse;
     private int currentPhraseIndex;
@@ -163,7 +164,14 @@ public class NPCQuestionareInteraction : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
             {
-                levelsFadeScript.LoadNextLevel();
+                if(resultsMenu != null)
+                {
+                    resultsMenu.SetActive(true);
+                }
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
             else
             {
@@ -195,6 +203,11 @@ public class NPCQuestionareInteraction : MonoBehaviour
         isAnsweredFalse = true;
 
         interactionText.SetActive(true);
+
+        if (FindObjectOfType<Health>())
+        {
+            FindObjectOfType<Health>().TakeDamage(5);
+        }
     }
     private void NextPhrase()
     {
